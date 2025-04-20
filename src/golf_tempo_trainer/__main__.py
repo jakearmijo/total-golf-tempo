@@ -65,7 +65,7 @@ Remember:
     """)
 
 def main() -> None:
-    print("Welcome to Golf Tempo Trainer!")
+    print("Welcome toDickfore Trainer!")
     
     tempo_settings = get_tempo_settings()
     if tempo_settings is None:

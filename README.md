@@ -1,6 +1,6 @@
-# 🏌️‍♂️ Golf Tempo Trainer
+# 🏌️‍♂️Dickfore Trainer
 
-A professional-grade golf tempo training application that helps golfers develop consistent swing timing by matching their tempo to top tour professionals.
+A professional-gradedickfore training application that helps golfers develop consistent swing timing by matching their tempo to top tour professionals.
 
 ## 🎯 Features
 
