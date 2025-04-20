@@ -9,6 +9,7 @@ from pydub import AudioSegment
 from pydub.playback import play as pydub_play
 from .config import AUDIO_CONFIG
 import time
+import pyttsx3
 
 
 @dataclass
@@ -132,7 +133,12 @@ class AudioPlayer:
         self.shot_type = "long_game"
         self.backswing_time = 0
         self.downswing_time = 0
-        self.audio_cache = AudioCache()  # Initialize the cache
+        self.audio_cache = AudioCache()
+        
+        # Initialize text-to-speech engine
+        self.tts_engine = pyttsx3.init()
+        self.tts_engine.setProperty('rate', 150)  # Speed of speech
+        self.tts_engine.setProperty('volume', 0.9)  # Volume level
 
     def set_shot_type(self, shot_type: str) -> None:
         """Set the shot type to use appropriate tones"""
@@ -141,12 +147,19 @@ class AudioPlayer:
             self.shot_type = "long_game"
 
     def preload_swing_tones(self, backswing_s: float, downswing_s: float) -> None:
-        """Preload the three distinct musical tones for the Tour Tempo system"""
+        """Preload all tones including the new metronome tone"""
         config = AUDIO_CONFIG[self.shot_type]
         sample_rate = AUDIO_CONFIG["sample_rate"]
 
-        # Use cache to generate and store tones
+        # Add metronome tone to cached_tones
         self.cached_tones = {
+            'metronome': self.audio_cache.get_tone(
+                'metronome',
+                freq=330,    # E4 note - softer than main tones
+                duration_s=0.050,  # Short duration for rhythm
+                volume=0.5,   # Lower volume than swing tones
+                sample_rate=sample_rate
+            ),
             'backswing_start': self.audio_cache.get_tone(
                 'backswing',
                 freq=440,    # A4 note
@@ -197,20 +210,39 @@ class AudioPlayer:
             sd.play(self.cached_tones[tone_name], AUDIO_CONFIG["sample_rate"])
             sd.wait()  # Wait for the sound to finish playing
 
+    def speak(self, text: str) -> None:
+        """Speak the given text using text-to-speech"""
+        self.tts_engine.say(text)
+        self.tts_engine.runAndWait()
+
     def play_swing_sequence(self) -> None:
-        """Play a complete swing sequence with the three key tones"""
+        """Play a complete swing sequence with preparation rhythm"""
+        # Play pro name announcement
+        if hasattr(self, 'current_pro'):
+            self.speak(f"Starting {self.current_pro}")
+            time.sleep(0.5)  # Brief pause after pro announcement
+        
+        # Play "Address the ball" voice prompt
+        self.speak("Address the ball")
+        time.sleep(1)  # Brief pause after the voice prompt
+        
+        # Play 4 metronome beats to establish rhythm
+        beat_interval = self.backswing_time / 3  # Divide backswing into 3 beats
+        for _ in range(4):
+            self.play('metronome')
+            time.sleep(beat_interval)
+
         # First tone - Start takeaway
-        print("▶ Start backswing")
         self.play('backswing_start')
+        
+        # Wait for backswing duration
+        time.sleep(self.backswing_time)
 
         # Second tone - Start downswing
-        time.sleep(self.backswing_time)
-        print("▶ Start downswing")
         self.play('downswing_start')
 
         # Third tone - Impact
         time.sleep(self.downswing_time)
-        print("▶ Impact!")
         self.play('impact')
 
         # Rest before next sequence
@@ -222,8 +254,15 @@ class AudioPlayer:
             stream.stop()
             stream.close()
         self._streams.clear()
+        
+        # Stop and close the TTS engine
+        self.tts_engine.stop()
 
     def set_timing(self, backswing_time: float, downswing_time: float) -> None:
         """Set the timing values for the swing sequence"""
         self.backswing_time = backswing_time
         self.downswing_time = downswing_time
+
+    def set_current_pro(self, pro_name: str) -> None:
+        """Set the current pro name for announcements"""
+        self.current_pro = pro_name
