@@ -15,7 +15,7 @@ A professional-gradedickfore training application that helps golfers develop con
   - Putting (2:1 ratio)
     - Adam Scott (76 BPM)
     - Tiger Woods (76 BPM)
-    - Jake Armijo (95 BPM)
+    - Jake Armijo (85 BPM)
 
 - **High-Precision Audio Feedback**:
   - Customized tones for different swing phases

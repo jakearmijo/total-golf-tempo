@@ -142,7 +142,7 @@ TEMPO_CONFIG: Dict[str, ShotConfig] = {
                 "description": "Classic putting tempo"
             },
             "Jake Armijo": {
-                "bpm": 95,
+                "bpm": 85,
                 "ratio": 2.0,
                 "frames": "12/6",
                 "description": "Quick, rhythmic putting tempo"
