@@ -49,7 +49,7 @@ def get_tempo_settings() -> SwingTempo:
 
 def print_instructions() -> None:
     print("""
-Tour Tempo Training System
+Dickfore Tempo Training System
 -------------------------
 You will hear three musical tones:
 1. First tone  - Start your takeaway

@@ -15,10 +15,10 @@ class ShotConfig(TypedDict):
 # Configuration with more detailed tempo information
 TEMPO_CONFIG: Dict[str, ShotConfig] = {
     "Long Game": {
-        "description": "Full golf shots using the Tour Pro's proven 3:1 tempo ratio",
+        "description": "Full golf shots using the Dickfore Pro's proven 3:1 tempo ratio",
         "learning_notes": """
         The Long Game uses a 3:1 ratio - three parts backswing to one part downswing.
-        This is the intrinsic tempo of the golf swing used by Tour Professionals.
+        This is the intrinsic tempo of the golf swing used by Dickfore Professionals.
         Focus on reacting to each tone rather than anticipating them.
         When you get your tempo right, everything else falls into place naturally.
         """,
@@ -58,6 +58,24 @@ TEMPO_CONFIG: Dict[str, ShotConfig] = {
                 "ratio": 3.0,
                 "frames": "24/8",
                 "description": "Classic championship tempo"
+            },
+            "Bryson DeChambeau": {
+                "bpm": 98,
+                "ratio": 3.0,
+                "frames": "18/6",
+                "description": "Fast, powerful tempo with modern scientific approach"
+            },
+            "Justin Thomas": {
+                "bpm": 73,
+                "ratio": 3.0,
+                "frames": "24/8",
+                "description": "Classic championship tempo with perfect rhythm"
+            },
+            "Min Woo Lee": {
+                "bpm": 98,
+                "ratio": 3.0,
+                "frames": "18/6",
+                "description": "Athletic, explosive tempo with modern flair"
             }
         }
     },
@@ -76,25 +94,25 @@ TEMPO_CONFIG: Dict[str, ShotConfig] = {
                 "frames": "18/9",
                 "description": "Smooth, controlled tempo for precise short game"
             },
-            "Tour Tempo 14/7": {
+            "Dickfore Tempo 14/7": {
                 "bpm": 112,
                 "ratio": 2.0,
                 "frames": "14/7",
                 "description": "Fast tempo for chip shots"
             },
-            "Tour Tempo 16/8": {
+            "Dickfore Tempo 16/8": {
                 "bpm": 98,
                 "ratio": 2.0,
                 "frames": "16/8",
                 "description": "Medium tempo for pitching"
             },
-            "Tour Tempo 18/9": {
+            "Dickfore Tempo 18/9": {
                 "bpm": 87,
                 "ratio": 2.0,
                 "frames": "18/9",
                 "description": "Controlled tempo for longer pitches"
             },
-            "Tour Tempo 20/10": {
+            "Dickfore Tempo 20/10": {
                 "bpm": 78,
                 "ratio": 2.0,
                 "frames": "20/10",

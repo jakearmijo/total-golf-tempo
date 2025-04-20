@@ -10,7 +10,7 @@ def trainer():
 def swing_tempo():
     return SwingTempo(
         shot_type="Long Game",
-        pro_name="Tour Tempo 21/7",
+        pro_name="Dickfore Tempo 21/7",
         bpm=84,
         ratio=3.0,
         frames="21/7",

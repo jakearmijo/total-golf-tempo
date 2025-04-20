@@ -37,6 +37,10 @@ class TempoTrainer:
         self.audio_player = AudioPlayer()
         self.cycle_count = 0
         self.last_timing: Optional[SwingTiming] = None
+        self.current_pro = ""
+        self.current_frames = ""
+        self.current_bpm = 0.0
+        self.current_description = ""
 
     def analyze_timing(self, backswing_s: float, downswing_s: float, target_backswing: float, target_downswing: float) -> None:
         """Analyze and display detailed timing information"""
@@ -45,7 +49,6 @@ class TempoTrainer:
         target_total = target_backswing + target_downswing
         target_ratio = target_backswing / target_downswing
 
-        # Store timing for this swing
         self.last_timing = SwingTiming(
             backswing=backswing_s,
             downswing=downswing_s,
@@ -53,14 +56,35 @@ class TempoTrainer:
             ratio=ratio
         )
 
-        print("\nTiming Analysis:")
-        print(f"• Backswing: {backswing_s:.6f}s vs target {target_backswing:.6f}s (error: {(backswing_s - target_backswing)*1000:.3f}ms)")
-        print(f"• Downswing: {downswing_s:.6f}s vs target {target_downswing:.6f}s (error: {(downswing_s - target_downswing)*1000:.3f}ms)")
-        print(f"• Total:     {total_s:.6f}s vs target {target_total:.6f}s (error: {(total_s - target_total)*1000:.3f}ms)")
-        print(f"• Ratio:     {ratio:.3f}:1 vs target {target_ratio:.1f}:1 (error: {abs(ratio - target_ratio)/target_ratio*100:.3f}%)")
+        print(f"\n=== Swing #{self.cycle_count} - {self.current_pro} ({self.current_frames}) ===")
+        print(f"Pro Style: {self.current_description}")
+        
+        # Timing Analysis
+        print("\nTiming:")
+        print(f"Backswing  {backswing_s:.3f}s vs {target_backswing:.3f}s (Δ {(backswing_s - target_backswing)*1000:.1f}ms)")
+        print(f"Downswing  {downswing_s:.3f}s vs {target_downswing:.3f}s (Δ {(downswing_s - target_downswing)*1000:.1f}ms)")
+        print(f"Total      {total_s:.3f}s vs {target_total:.3f}s (Δ {(total_s - target_total)*1000:.1f}ms)")
+        print(f"Ratio      {ratio:.2f}:1 vs {target_ratio:.1f}:1")
+        
+        # Quick Performance Indicator
+        ratio_error = abs(ratio - target_ratio)/target_ratio * 100
+        if ratio_error <= 5:
+            print("\n✅ Excellent tempo")
+        elif ratio_error <= 10:
+            print("\n⚠️  Good - minor adjustments needed")
+        else:
+            print("\n❌ Focus on matching rhythm")
+
+        print("-" * 50)
 
     def train(self, settings: SwingTempo) -> None:
         """Run the training session with timing analysis"""
+        # Store current pro details for analysis
+        self.current_pro = settings.pro_name
+        self.current_frames = settings.frames
+        self.current_bpm = settings.bpm
+        self.current_description = settings.description
+        
         # Set the appropriate shot type and timing
         self.audio_player.set_shot_type(settings.shot_type)
         self.audio_player.set_timing(settings.backswing_time, settings.downswing_time)
