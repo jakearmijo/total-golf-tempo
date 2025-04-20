@@ -122,7 +122,12 @@ TEMPO_CONFIG: Dict[str, ShotConfig] = {
     },
     "Putting": {
         "description": "Putting strokes with precise tempo control",
-        "learning_notes": "Putting requires consistent tempo for distance control",
+        "learning_notes": """
+        Putting tempo is like a metronome - back, hit, back, hit.
+        Focus on consistent rhythm for better distance control.
+        The metronome pattern helps develop muscle memory.
+        Listen for the steady 'tick-tock' rhythm in your stroke.
+        """,
         "pros": {
             "Adam Scott": {
                 "bpm": 76,
@@ -135,6 +140,12 @@ TEMPO_CONFIG: Dict[str, ShotConfig] = {
                 "ratio": 2.0,
                 "frames": "15/7.5",
                 "description": "Classic putting tempo"
+            },
+            "Jake Armijo": {
+                "bpm": 95,
+                "ratio": 2.0,
+                "frames": "12/6",
+                "description": "Quick, rhythmic putting tempo"
             }
         }
     }
@@ -156,10 +167,10 @@ AUDIO_CONFIG = {
         "impact": {"freq": 880, "volume": 1.0}
     },
     "putting": {
-        "backswing": {"start_freq": 440, "end_freq": 330, "volume": 0.9},
-        "top": {"freq": 550, "volume": 0.9},
-        "downswing": {"start_freq": 660, "end_freq": 440, "volume": 0.9},
-        "impact": {"freq": 770, "volume": 1.0}
+        "backswing": {"freq": 1320, "volume": 0.8},  # Simple 'tick' sound
+        "downswing": {"freq": 880, "volume": 0.8},   # Simple 'tock' sound
+        "top": {"freq": 0, "volume": 0},             # Silent
+        "impact": {"freq": 0, "volume": 0}           # Silent
     }
 }
 
